@@ -6,6 +6,7 @@ import Skills from "./components/Skills.jsx";
 import Donate from "./components/Donate.jsx";
 // import Resume from "./components/Resume.jsx";      // ✅ Import Resume
 import LiveChat from "./components/LiveChat.jsx";  // ✅ Import LiveChat
+import CrudOperation from "./components/CrudOperations.jsx"; // ✅ Import CRUD Operation
 
 function App() {
   return (
@@ -22,11 +23,11 @@ function App() {
       {/* Skills section */}
       <Skills />
 
-      {/* Resume viewer section */}
-      //  ✅ Add Resume section
+      {/* CRUD Operation section */}
+      <CrudOperation /> {/* ✅ Add CRUD Operation section */}
 
       {/* Live chat section */}
-      <LiveChat />  {/* ✅ Add LiveChat section */}
+      <LiveChat /> {/* ✅ Add LiveChat section */}
 
       {/* Donate me section with Razorpay */}
       <Donate />
