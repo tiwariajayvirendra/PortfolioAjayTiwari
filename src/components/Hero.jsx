@@ -1,10 +1,15 @@
 import React from "react";
+import profilePic from "../assets/ajaytiwari.jpg"; // adjust path if needed
 
 function Hero() {
   return (
     <section className="flex flex-col items-center justify-center text-center py-20 bg-gradient-to-r from-blue-100 via-purple-100 to-green-100 px-6">
-      {/* Profile picture placeholder */}
-      <div className="w-32 h-32 bg-gradient-to-br from-gray-300 to-gray-100 rounded-full mb-4 shadow-xl border-4 border-white"></div>
+      {/* Profile picture */}
+      <img
+        src={profilePic}
+        alt="Tiwari Ajay Virendra"
+        className="w-32 h-32 rounded-full mb-4 shadow-xl border-4 border-white object-cover"
+      />
 
       {/* Name and intro */}
       <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">
