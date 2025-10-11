@@ -55,6 +55,30 @@ function Skills() {
             <li>Legacy-focused utilities and onboarding clarity</li>
           </ul>
         </div>
+
+        {/* DevOps & Containerization */}
+        <div className="p-6 bg-gradient-to-r from-cyan-100 to-blue-50 border border-cyan-200 rounded-2xl shadow-lg hover:shadow-xl transition">
+          <h3 className="text-xl font-bold text-cyan-700 mb-3">DevOps & Containerization</h3>
+          <ul className="list-disc list-inside text-gray-800 space-y-2 text-sm">
+            <li>Docker for containerized development and deployment</li>
+            <li>Custom Dockerfiles for backend and frontend services</li>
+            <li>Volume mapping and environment variable management</li>
+            <li>Intern-friendly scripts for Docker onboarding</li>
+            <li>CLI troubleshooting and recovery utilities</li>
+          </ul>
+        </div>
+
+        {/* AI Prompting & Automation */}
+        <div className="p-6 bg-gradient-to-r from-indigo-100 to-purple-50 border border-indigo-200 rounded-2xl shadow-lg hover:shadow-xl transition">
+          <h3 className="text-xl font-bold text-indigo-700 mb-3">AI Prompting & Automation</h3>
+          <ul className="list-disc list-inside text-gray-800 space-y-2 text-sm">
+            <li>Crafted effective prompts for AI tools (Copilot, ChatGPT, Bard)</li>
+            <li>Used AI for code generation, debugging, and documentation</li>
+            <li>Integrated AI into intern workflows for faster onboarding</li>
+            <li>Bilingual prompting for Hindi-English clarity</li>
+            <li>Optimized AI responses for legacy-grade team empowerment</li>
+          </ul>
+        </div>
       </div>
     </section>
   );

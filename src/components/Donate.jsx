@@ -1,37 +1,85 @@
 import React from "react";
 import { FaLinkedin, FaGithub, FaYoutube, FaXTwitter } from "react-icons/fa6";
 
-// Razorpay checkout function
-const openRazorpay = () => {
-  const options = {
-    key: "rzp_test_yourKeyHere", // Replace with your Razorpay key
-    amount: 50000, // ₹500 in paise
-    currency: "INR",
-    name: "Donate to Ajay",
-    description: "Support my learning & projects!",
-    handler: function (response) {
-      alert("Payment successful! Payment ID: " + response.razorpay_payment_id);
-    },
-    theme: {
-      color: "#3399cc",
-    },
+const Donate = () => {
+  const openRazorpay = async () => {
+    try {
+      // 1️⃣ Create order via backend
+      const res = await fetch("http://localhost:5001/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ amount: 500 }), // amount in rupees
+      });
+
+      const order = await res.json();
+
+      // 2️⃣ Razorpay checkout options
+      const options = {
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID, // must use VITE_ prefix
+        amount: order.amount,
+        currency: order.currency,
+        name: "Donate to Ajay",
+        description: "Support my learning & projects!",
+        order_id: order.id,
+        handler: async function (response) {
+          // 🧠 Razorpay returns payment details in the handler callback.
+          // We destructure them safely and verify via backend.
+          if (!response || !response.razorpay_payment_id) {
+            console.error("❌ Razorpay response missing or malformed:", response);
+            alert("Payment failed or incomplete. Please try again.");
+            return;
+          }
+
+          const {
+            razorpay_payment_id,
+            razorpay_order_id,
+            razorpay_signature,
+          } = response;
+
+          // 3️⃣ Verify payment via backend
+          const verifyRes = await fetch("http://localhost:5001/api/verify", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              razorpay_payment_id,
+              razorpay_order_id,
+              razorpay_signature,
+            }),
+          });
+
+          const result = await verifyRes.json();
+          if (result.success) {
+            alert("✅ Payment Successful! Payment ID: " + razorpay_payment_id);
+          } else {
+            alert("❌ Payment Verification Failed!");
+          }
+        },
+        prefill: {
+          name: "Donor Name",
+          email: "donor@example.com",
+          contact: "9999999999",
+        },
+        theme: { color: "#6366f1" },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (error) {
+      console.error("Razorpay Error:", error);
+      alert("❌ Something went wrong with payment!");
+    }
   };
 
-  const rzp = new window.Razorpay(options);
-  rzp.open();
-};
-
-function Donate() {
   return (
     <section
       id="donate"
       className="px-6 md:px-20 py-20 bg-gradient-to-br from-yellow-50 via-pink-50 to-purple-100 text-center"
     >
       <h2 className="text-4xl font-extrabold text-purple-700 mb-4 animate-pulse">
-        🙏 Support My Journey
+         Support My Journey
       </h2>
       <p className="text-gray-700 text-md md:text-lg mb-8 max-w-2xl mx-auto">
-        Your donation helps me build better projects, mentor interns, and share onboarding clarity with the dev community. Every rupee fuels my mission to make tech accessible and empowering.
+        Your donation helps me build better projects, mentor interns, and share onboarding clarity with the dev community.
       </p>
 
       {/* Impact tiers */}
@@ -50,7 +98,7 @@ function Donate() {
         </div>
       </div>
 
-      {/* CTA */}
+      {/* CTA button */}
       <button
         onClick={openRazorpay}
         className="px-8 py-4 bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold rounded-full shadow-xl hover:from-purple-700 hover:to-blue-700 transition transform hover:scale-105"
@@ -58,12 +106,10 @@ function Donate() {
         💸 Donate via Razorpay
       </button>
 
-      {/* Gratitude */}
+      {/* Gratitude & security */}
       <p className="text-sm text-gray-600 mt-8 italic">
         "Every donation reminds me that my work matters. Thank you for believing in me." — Ajay Tiwari
       </p>
-
-      {/* Security note */}
       <p className="text-xs text-gray-500 mt-2">
         Secure payment powered by Razorpay · Suggested ₹500 · You choose the amount
       </p>
@@ -109,6 +155,6 @@ function Donate() {
       </div>
     </section>
   );
-}
+};
 
 export default Donate;

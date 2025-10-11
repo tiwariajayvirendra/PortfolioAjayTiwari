@@ -6,10 +6,10 @@ import Hero from "./components/Hero.jsx";
 import About from "./components/About.jsx";
 import Skills from "./components/Skills.jsx";
 import Donate from "./components/Donate.jsx";
-// import Resume from "./components/Resume.jsx";      // ✅ Import Resume
-import LiveChat from "./components/LiveChat.jsx";  // ✅ Import LiveChat
-import CrudOperation from "./components/CrudOperations.jsx"; // ✅ Import CRUD Operation
-import Projects from "./components/Projects.jsx"; // ✅ Import Projects Page
+import LiveChat from "./components/LiveChat.jsx";
+import CrudOperation from "./components/CrudOperations.jsx";
+import Projects from "./components/Projects.jsx";
+ 
 
 function App() {
   return (
@@ -29,7 +29,8 @@ function App() {
                 <Skills />
                 <CrudOperation />
                 <LiveChat />
-                <Donate />
+                <Donate /> {/* Razorpay Donate button integrated */}
+                {/* <DonateButton /> */}
               </>
             }
           />

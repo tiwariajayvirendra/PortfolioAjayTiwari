@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
+
   const toggleMenu = () => setIsOpen(!isOpen);
 
   const navLinks = [
@@ -12,6 +14,24 @@ function Navbar() {
     { label: "Donate", href: "#donate" },
     { label: "CRUD Operation", href: "#crud" },
   ];
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      { threshold: 0.6 }
+    );
+
+    const sections = document.querySelectorAll("section");
+    sections.forEach((section) => observer.observe(section));
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <nav className="sticky top-0 bg-white shadow-md z-50">
@@ -25,8 +45,10 @@ function Navbar() {
             <li key={link.label}>
               <a
                 href={link.href}
-                className={`hover:text-blue-600 transition ${
-                  link.label === "CRUD Operation" ? "text-blue-500" : ""
+                className={`transition ${
+                  activeSection === link.href.replace("#", "")
+                    ? "text-blue-600 border-b-2 border-blue-600"
+                    : "hover:text-blue-600"
                 }`}
               >
                 {link.label}
@@ -71,7 +93,15 @@ function Navbar() {
         <ul className="md:hidden px-6 pb-4 space-y-2 text-gray-700 font-medium">
           {navLinks.map((link) => (
             <li key={link.label}>
-              <a href={link.href} onClick={toggleMenu}>
+              <a
+                href={link.href}
+                onClick={toggleMenu}
+                className={`block transition ${
+                  activeSection === link.href.replace("#", "")
+                    ? "text-blue-600 font-semibold"
+                    : "hover:text-blue-600"
+                }`}
+              >
                 {link.label}
               </a>
             </li>
