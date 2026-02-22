@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
 
-const socket = io("http://localhost:5000"); // your server URL
+const socket = io(import.meta.env.VITE_API_URL || "https://portfolioajaytbackend.onrender.com"); // your server URL
 
 function LiveChat() {
   const [senderMsg, setSenderMsg] = useState("");

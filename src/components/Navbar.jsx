@@ -7,12 +7,12 @@ function Navbar() {
   const toggleMenu = () => setIsOpen(!isOpen);
 
   const navLinks = [
-    { label: "About", href: "#about" },
-    { label: "Skills", href: "#skills" },
-    // { label: "Resume", href: "#resume" }, // Uncomment if needed
-    { label: "Live Chat", href: "#livechat" },
-    { label: "Donate", href: "#donate" },
-    { label: "CRUD Operation", href: "#crud" },
+    { label: "About", href: "/#about" },
+    { label: "Skills", href: "/#skills" },
+    // { label: "Resume", href: "/#resume" }, // Uncomment if needed
+    { label: "Live Chat", href: "/#livechat" },
+    { label: "Donate", href: "/#donate" },
+    { label: "Message Me", href: "/#crud" },
   ];
 
   useEffect(() => {

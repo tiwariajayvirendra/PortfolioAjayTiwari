@@ -3,28 +3,34 @@ import { useNavigate } from "react-router-dom";
 
 const projects = [
   {
-    title: "JiGOOGLE Onboarding Portal",
+    title: "Jigoogle Numbers",
     description: "Modular intern onboarding system with recovery scripts and legacy utilities.",
-    link: "https://tiwariajayvirendra.web.app",
-    tech: ["React", "Express", "MongoDB", "Tailwind"],
+    link: "https://www.jigoogle.com",
+    tech: ["React", "Express", "MySQL", "Tailwind","Node"],
   },
   {
     title: "Live Chat System",
     description: "Socket-powered real-time chat with Razorpay integration and intern clarity.",
-    link: "https://www.jigoogle.com",
+    link: "https://tiwariajayvirendra.web.app",
     tech: ["Node.js", "Socket.io", "React"],
   },
   {
-    title: "CRUD Showcase",
-    description: "Frontend CRUD form with edit/delete logic and onboarding-grade UX.",
-    link: "https://www.pestmark.in",
-    tech: ["React", "Tailwind"],
+    title: "Contact CRUD",
+    description: "Frontend CRUD form with edit/delete , Creat/Updated logic and onboarding-grade UX.",
+    link: "https://completecrudop.onrender.com",
+    tech: ["Node","Express","EJS","MongoDB"],
   },
   {
     title: "Panel Paradise",
     description: "Elegant solar panel showcase with responsive UI and client-ready branding.",
     link: "https://panelparadise.com",
-    tech: ["React", "Tailwind", "Hosting"],
+    tech: ["React", "Tailwind", "Hosting","Node","Express"],
+  },
+  {
+    title: "Pest Mark",
+    description: "Pest Control Website with only Enquiery receving via Contact Us.",
+    link: "https://pestmark.in",
+    tech: ["React", "Tailwind", "Hosting","Node","Express","MongoDB"],
   },
 ];
 

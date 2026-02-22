@@ -1,40 +1,43 @@
 import React, { useState } from "react";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { app } from "../firebase";
+import { Link } from "react-router-dom";
 
 function CrudOperation() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
-  const [submittedData, setSubmittedData] = useState(null);
-  const [isEditing, setIsEditing] = useState(false);
+  const db = getFirestore(app);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmittedData(formData);
-    setFormData({ name: "", email: "", message: "" });
-    setIsEditing(false);
-  };
+    if (!formData.name || !formData.email || !formData.message) return;
 
-  const handleEdit = () => {
-    setFormData(submittedData);
-    setIsEditing(true);
-  };
-
-  const handleDelete = () => {
-    setSubmittedData(null);
-    setFormData({ name: "", email: "", message: "" });
-    setIsEditing(false);
+    try {
+      await addDoc(collection(db, "messages"), {
+        ...formData,
+        timestamp: new Date().toISOString(),
+      });
+      alert("✅ Message sent successfully!");
+      setFormData({ name: "", email: "", message: "" });
+    } catch (error) {
+      console.error("Error sending message:", error);
+      alert("❌ Failed to send message.");
+    }
   };
 
   return (
     <section id="crud" className="py-12 px-4 bg-gradient-to-br from-purple-100 to-blue-100 text-black">
-      <div className="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-lg">
-        <h2 className="text-4xl font-extrabold mb-8 text-center text-purple-700">CRUD Operation</h2>
+      <div className="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-lg">
+        <h2 className="text-4xl font-extrabold mb-8 text-center text-purple-700">
+          📨 Send Me a Message
+        </h2>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6 mb-10">
           <div>
             <label htmlFor="name" className="block text-sm font-semibold text-gray-700 mb-1">
               Name
@@ -86,34 +89,16 @@ function CrudOperation() {
             type="submit"
             className="w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white font-semibold py-3 rounded-lg hover:from-purple-700 hover:to-blue-700 transition"
           >
-            {isEditing ? "Update Data" : "Submit"}
+            Send Message
           </button>
         </form>
 
-        {/* Submitted Data Viewer */}
-        {submittedData && (
-          <div className="mt-10 bg-gradient-to-br from-blue-50 to-purple-50 p-6 rounded-lg shadow-inner">
-            <h3 className="text-2xl font-bold mb-4 text-center text-gray-800">Your Submitted Data</h3>
-            <p><span className="font-semibold text-purple-700">Name:</span> {submittedData.name}</p>
-            <p><span className="font-semibold text-purple-700">Email:</span> {submittedData.email}</p>
-            <p><span className="font-semibold text-purple-700">Message:</span> {submittedData.message}</p>
-
-            <div className="mt-6 flex justify-center gap-4">
-              <button
-                onClick={handleEdit}
-                className="bg-yellow-500 text-white px-5 py-2 rounded-lg hover:bg-yellow-600 transition"
-              >
-                Edit Your Data
-              </button>
-              <button
-                onClick={handleDelete}
-                className="bg-red-500 text-white px-5 py-2 rounded-lg hover:bg-red-600 transition"
-              >
-                Delete Your Data
-              </button>
-            </div>
-          </div>
-        )}
+        {/* Admin Link */}
+        <div className="text-center mt-6 border-t pt-4">
+          <Link to="/admin" className="text-xs text-gray-400 hover:text-purple-600 transition">
+            Admin Access
+          </Link>
+        </div>
       </div>
     </section>
   );

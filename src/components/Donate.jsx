@@ -1,21 +1,37 @@
 import React from "react";
 import { FaLinkedin, FaGithub, FaYoutube, FaXTwitter } from "react-icons/fa6";
+// 👇 Firebase imports add karein
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { app } from "../firebase"; // Make sure firebase.js exists in src folder
 
 const Donate = () => {
   const openRazorpay = async () => {
+    // 💡 Let's check for the key first.
+    const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY_ID;
+    if (!razorpayKey) {
+      console.error("❌ Razorpay Key ID is not defined in .env file.");
+      alert("Payment gateway is not configured. Please contact support.");
+      return;
+    }
+
     try {
+      const backendUrl = import.meta.env.VITE_API_URL || "http://localhost:5000";
+
       // 1️⃣ Create order via backend
-      const res = await fetch("http://localhost:5001/api/orders", {
+      const res = await fetch(`${backendUrl}/api/orders`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ amount: 500 }), // amount in rupees
       });
 
+      if (!res.ok) {
+        throw new Error(`Failed to create order: ${res.statusText}`);
+      }
       const order = await res.json();
 
       // 2️⃣ Razorpay checkout options
       const options = {
-        key: import.meta.env.VITE_RAZORPAY_KEY_ID, // must use VITE_ prefix
+        key: razorpayKey,
         amount: order.amount,
         currency: order.currency,
         name: "Donate to Ajay",
@@ -37,7 +53,7 @@ const Donate = () => {
           } = response;
 
           // 3️⃣ Verify payment via backend
-          const verifyRes = await fetch("http://localhost:5001/api/verify", {
+          const verifyRes = await fetch(`${backendUrl}/api/verify`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -48,8 +64,26 @@ const Donate = () => {
           });
 
           const result = await verifyRes.json();
+          if (!verifyRes.ok) {
+            throw new Error(result.message || "Payment verification failed on the server.");
+          }
+
           if (result.success) {
             alert("✅ Payment Successful! Payment ID: " + razorpay_payment_id);
+            
+            // 4️⃣ Save Data to Firebase Firestore
+            try {
+              const db = getFirestore(app);
+              await addDoc(collection(db, "donations"), {
+                paymentId: razorpay_payment_id,
+                amount: order.amount / 100, // Save in Rupees
+                date: new Date().toISOString(),
+                status: "Success"
+              });
+              console.log("Data saved to Firebase");
+            } catch (firebaseError) {
+              console.error("Error saving to Firebase:", firebaseError);
+            }
           } else {
             alert("❌ Payment Verification Failed!");
           }
@@ -135,7 +169,8 @@ const Donate = () => {
           <span className="mt-2 text-sm font-medium">GitHub</span>
         </a>
         <a
-          href="N/A"
+          href="#"
+          onClick={() => alert('⚠️ This account has been deleted by its user for personal reasons.')}
           target="_blank"
           rel="noopener noreferrer"
           className="bg-white p-4 rounded-xl shadow-md hover:shadow-xl hover:scale-105 transition transform text-black flex flex-col items-center"
@@ -144,7 +179,7 @@ const Donate = () => {
           <span className="mt-2 text-sm font-medium">X</span>
         </a>
         <a
-          href="N/A"
+          href="https://www.youtube.com/@tav2"
           target="_blank"
           rel="noopener noreferrer"
           className="bg-white p-4 rounded-xl shadow-md hover:shadow-xl hover:scale-105 transition transform text-red-600 flex flex-col items-center"

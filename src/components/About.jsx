@@ -26,7 +26,7 @@ function About() {
             I specialize in building responsive, modular, and performant web
             apps using{" "}
             <span className="font-bold text-green-600">
-              MongoDB, Express, React, and Node.js
+              MongoDB, Express, React, and Node.js, ChatGPT, Copilot, Docker, Kuberneties, Firebase, 
             </span>
             , styled with{" "}
             <span className="font-bold text-purple-600">Tailwind CSS</span>. Every

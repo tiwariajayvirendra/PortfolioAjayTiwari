@@ -15,11 +15,36 @@ function Hero() {
       <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight">
         Tiwari Ajay Virendra
       </h1>
+
+       <div className="flex flex-col sm:flex-row items-center justify-center gap-4 p-4 bg-gradient-to-r from-indigo-600 to-fuchsia-600 text-white rounded-xl shadow-lg">
+      {/* Phone */}
+      <a
+        href="tel:+919956927789"
+        className="flex items-center gap-2 hover:text-yellow-200 transition"
+      >
+        <span className="text-lg">📞</span>
+        <span className="font-medium">+91 99569 27789</span>
+      </a>
+
+      {/* Divider */}
+      <span className="hidden sm:block text-white/50">|</span>
+
+      {/* Email */}
+      <a
+        href="mailto:ajaytripathi821@gmail.com"
+        className="flex items-center gap-2 hover:text-yellow-200 transition"
+      >
+        <span className="text-lg">✉️</span>
+        <span className="font-medium">ajaytripathi821@gmail.com</span>
+      </a>
+    </div>
+ 
+
       <p className="text-lg text-gray-700 mt-2 font-medium">
         BCA Student · Fullstack Web Developer · MERN Specialist
       </p>
       <p className="text-md text-gray-600 italic">
-        Crafting scalable web apps with Tailwind CSS, React, and Express
+        Crafting scalable web apps with Tailwind CSS,Material UI Mongodb, React, Node and Express with Mysql And Docker and Kuberneties.
       </p>
 
       {/* Stats */}

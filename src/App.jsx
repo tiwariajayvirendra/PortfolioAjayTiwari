@@ -9,6 +9,7 @@ import Donate from "./components/Donate.jsx";
 import LiveChat from "./components/LiveChat.jsx";
 import CrudOperation from "./components/CrudOperations.jsx";
 import Projects from "./components/Projects.jsx";
+import AdminDashboard from "./components/AdminDashboard.jsx";
  
 
 function App() {
@@ -37,6 +38,9 @@ function App() {
 
           {/* Projects Page */}
           <Route path="/projects" element={<Projects />} />
+
+          {/* Admin Page */}
+          <Route path="/admin" element={<AdminDashboard />} />
         </Routes>
       </div>
     </Router>
