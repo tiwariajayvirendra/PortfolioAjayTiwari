@@ -68,6 +68,28 @@ function Skills() {
           </ul>
         </div>
 
+        {/* AI Skill - New Catchy Card */}
+        <div className="p-6 bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 border-2 border-cyan-500/50 rounded-2xl shadow-[0_0_20px_rgba(34,211,238,0.3)] hover:shadow-[0_0_30px_rgba(34,211,238,0.5)] transition-all transform hover:-translate-y-2">
+          <h3 className="text-xl font-bold text-cyan-400 mb-3 flex items-center gap-2">✨ AI Skill</h3>
+          <ul className="list-disc list-inside text-gray-200 space-y-2 text-sm leading-relaxed">
+            <li className="font-extrabold text-white">AI integration using API on Web</li>
+            <li>Groq Cloud & Llama 3 API Orchestration</li>
+            <li>Intelligent Chatbot Architecture</li>
+            <li>AI-driven User Experience (UX)</li>
+          </ul>
+        </div>
+
+        {/* AI Engineering */}
+        <div className="p-6 bg-gradient-to-r from-blue-900/20 to-cyan-900/20 border border-blue-500/30 rounded-2xl shadow-lg hover:shadow-blue-500/20 transition">
+          <h3 className="text-xl font-bold text-blue-400 mb-3">AI Engineering</h3>
+          <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm">
+            <li>Custom AI Assistant (Jigoogle-AI) Integration</li>
+            <li>Groq Cloud SDK & Llama 3 Processing</li>
+            <li>Context-Aware Conversational Logic</li>
+            <li>Futuristic AI UI & UX Design</li>
+          </ul>
+        </div>
+
         {/* AI Prompting & Automation */}
         <div className="p-6 bg-gradient-to-r from-indigo-100 to-purple-50 border border-indigo-200 rounded-2xl shadow-lg hover:shadow-xl transition">
           <h3 className="text-xl font-bold text-indigo-700 mb-3">AI Prompting & Automation</h3>
@@ -77,6 +99,30 @@ function Skills() {
             <li>Integrated AI into intern workflows for faster onboarding</li>
             <li>Bilingual prompting for Hindi-English clarity</li>
             <li>Optimized AI responses for legacy-grade team empowerment</li>
+          </ul>
+        </div>
+
+        {/* Data Science */}
+        <div className="p-6 bg-gradient-to-r from-orange-100 to-orange-50 border border-orange-200 rounded-2xl shadow-lg hover:shadow-xl transition">
+          <h3 className="text-xl font-bold text-orange-700 mb-3">Data Science</h3>
+          <ul className="list-disc list-inside text-gray-800 space-y-2 text-sm">
+            <li>Python for Data Science & Automation</li>
+            <li>Numpy & Pandas for data manipulation</li>
+            <li>Power BI & Excel for data visualization</li>
+            <li>Statistics for Data Science (DS)</li>
+          </ul>
+        </div>
+
+        {/* Under Development / Learning */}
+        <div className="p-6 bg-gradient-to-r from-teal-100 to-teal-50 border border-teal-200 rounded-2xl shadow-lg hover:shadow-xl transition">
+          <h3 className="text-xl font-bold text-teal-700 mb-3">🚀 Learning & Research</h3>
+          <p className="text-[10px] font-bold text-teal-600 mb-2 uppercase tracking-widest">Currently Mastering</p>
+          <ul className="list-disc list-inside text-gray-800 space-y-2 text-sm">
+            <li>Machine Learning (ML) & Deep Learning</li>
+            <li>Large Language Models (LLM)</li>
+            <li>Generative AI (Gen AI)</li>
+            <li>Agentic AI Systems</li>
+            <li>Advanced Prompt Engineering</li>
           </ul>
         </div>
       </div>

@@ -10,6 +10,7 @@ import LiveChat from "./components/LiveChat.jsx";
 import CrudOperation from "./components/CrudOperations.jsx";
 import Projects from "./components/Projects.jsx";
 import AdminDashboard from "./components/AdminDashboard.jsx";
+import AskAI from "./components/AskAI.jsx";
  
 
 function App() {
@@ -18,6 +19,9 @@ function App() {
       <div className="bg-white min-h-screen text-black font-sans">
         {/* Navbar at the top */}
         <Navbar />
+
+        {/* Floating AI Assistant */}
+        <AskAI />
 
         <Routes>
           {/* Home Page */}

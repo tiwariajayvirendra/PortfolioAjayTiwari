@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { app } from "../firebase";
-import { Link } from "react-router-dom";
 
 function CrudOperation() {
   const [formData, setFormData] = useState({ name: "", email: "", message: "" });
@@ -92,13 +91,6 @@ function CrudOperation() {
             Send Message
           </button>
         </form>
-
-        {/* Admin Link */}
-        <div className="text-center mt-6 border-t pt-4">
-          <Link to="/admin" className="text-xs text-gray-400 hover:text-purple-600 transition">
-            Admin Access
-          </Link>
-        </div>
       </div>
     </section>
   );
