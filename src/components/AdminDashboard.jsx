@@ -2,6 +2,12 @@ import React, { useState, useEffect } from "react";
 import { getFirestore, collection, onSnapshot, deleteDoc, doc, query, orderBy } from "firebase/firestore";
 import { app } from "../firebase";
 import { useNavigate } from "react-router-dom";
+import { io } from "socket.io-client";
+
+const socket = io(import.meta.env.VITE_API_URL || "http://localhost:5000", {
+  transports: ["polling", "websocket"],
+  withCredentials: true
+});
 
 function AdminDashboard() {
   // Check if session already exists
@@ -14,6 +20,9 @@ function AdminDashboard() {
   const [filterDate, setFilterDate] = useState("");
   const [donations, setDonations] = useState([]);
   const [activeTab, setActiveTab] = useState("messages");
+  const [liveChats, setLiveChats] = useState({});
+  const [selectedChatId, setSelectedChatId] = useState(null);
+  const [adminReply, setAdminReply] = useState("");
   const db = getFirestore(app);
   const navigate = useNavigate();
 
@@ -65,6 +74,50 @@ function AdminDashboard() {
       unsubAi();
     };
   }, [isAuthenticated]);
+
+  useEffect(() => {
+    if (!isAuthenticated) return;
+
+    const qSupport = query(collection(db, "realtime_support"), orderBy("timestamp", "asc"));
+    const unsubscribeSupport = onSnapshot(qSupport, (snapshot) => {
+      const chatsMap = {};
+      snapshot.docs.forEach((doc) => {
+        const data = doc.data();
+        if (data.sessionId) {
+          if (!chatsMap[data.sessionId]) {
+            chatsMap[data.sessionId] = { name: data.name, email: data.email, messages: [] };
+          }
+          chatsMap[data.sessionId].messages.push({
+            role: data.role,
+            text: data.text,
+            timestamp: data.timestamp
+          });
+        }
+      });
+      setLiveChats(chatsMap);
+    }, (error) => {
+      console.error("Support chats snapshot fetch error:", error);
+    });
+
+    return () => unsubscribeSupport();
+  }, [isAuthenticated]);
+
+  const handleSendLiveReply = async () => {
+    if (!adminReply.trim() || !selectedChatId) return;
+
+    const targetChat = liveChats[selectedChatId];
+    const replyMsg = {
+      sessionId: selectedChatId,
+      name: targetChat?.name || "User",
+      email: targetChat?.email || "",
+      text: adminReply,
+      role: "Admin",
+      timestamp: new Date().toISOString()
+    };
+
+    setAdminReply("");
+    await addDoc(collection(db, "realtime_support"), replyMsg);
+  };
 
   const handleDeleteMessage = async (id) => {
     if (window.confirm("Delete this message?")) {
@@ -145,6 +198,16 @@ function AdminDashboard() {
             }`}
           >
             <span>💰</span> Donations <span className="ml-auto bg-green-200 text-green-800 text-xs py-1 px-2 rounded-full">₹{totalDonations}</span>
+          </button>
+          <button
+            onClick={() => setActiveTab("live_support")}
+            className={`w-full text-left py-3 px-5 rounded-xl font-medium transition-all duration-200 flex items-center gap-3 ${
+              activeTab === "live_support"
+                ? "bg-cyan-100 text-cyan-700 shadow-inner"
+                : "text-gray-600 hover:bg-gray-50 hover:text-cyan-600"
+            }`}
+          >
+            <span>💬</span> Live Support <span className="ml-auto bg-cyan-200 text-cyan-800 text-xs py-1 px-2 rounded-full">{Object.keys(liveChats).length}</span>
           </button>
         </nav>
         <div className="mt-auto pt-6 border-t border-gray-100">
@@ -287,6 +350,86 @@ function AdminDashboard() {
                   )}
                 </tbody>
               </table>
+            </div>
+          </div>
+        )}
+
+        {activeTab === "live_support" && (
+          <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-6 bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden h-[600px]">
+            <div className="border-r border-gray-200 overflow-y-auto p-4 space-y-2 bg-gray-50/50">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-gray-400 mb-3 px-2">Active Users</h3>
+              {Object.keys(liveChats).length === 0 ? (
+                <div className="text-sm text-gray-400 text-center py-10">No live sessions yet.</div>
+              ) : (
+                Object.keys(liveChats).map((sessionId) => {
+                  const chat = liveChats[sessionId];
+                  return (
+                    <button
+                      key={sessionId}
+                      onClick={() => setSelectedChatId(sessionId)}
+                      className={`w-full text-left p-3 rounded-xl transition flex flex-col gap-1 ${
+                        selectedChatId === sessionId ? "bg-cyan-600 text-white shadow-md" : "hover:bg-gray-100 text-gray-700"
+                      }`}
+                    >
+                      <span className="font-bold text-sm block truncate">{chat.name}</span>
+                      <span className={`text-xs block truncate ${selectedChatId === sessionId ? "text-cyan-100" : "text-gray-400"}`}>
+                        {chat.email || "No Email"}
+                      </span>
+                    </button>
+                  );
+                })
+              )}
+            </div>
+
+            <div className="flex flex-col h-full overflow-hidden bg-white">
+              {selectedChatId && liveChats[selectedChatId] ? (
+                <>
+                  <div className="p-4 border-b border-gray-100 bg-gray-50 flex items-center justify-between">
+                    <div>
+                      <h4 className="font-bold text-gray-800">{liveChats[selectedChatId].name}</h4>
+                      <p className="text-xs text-gray-500">{liveChats[selectedChatId].email || "No email verified"}</p>
+                    </div>
+                    <span className="text-[10px] bg-green-100 text-green-700 font-bold px-2 py-0.5 rounded-full uppercase tracking-wider">Connected</span>
+                  </div>
+
+                  <div className="flex-1 overflow-y-auto p-4 space-y-3 bg-gray-50/20">
+                    {liveChats[selectedChatId].messages.map((msg, idx) => (
+                      <div key={idx} className={`flex ${msg.role === "Admin" ? "justify-end" : "justify-start"}`}>
+                        <div className={`max-w-[70%] p-3 rounded-xl text-sm ${
+                          msg.role === "Admin" ? "bg-cyan-600 text-white rounded-tr-none" : "bg-gray-100 text-gray-800 rounded-tl-none border border-gray-200"
+                        }`}>
+                          <p>{msg.text}</p>
+                          <span className="text-[9px] opacity-60 block mt-1">
+                            {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="p-4 border-t border-gray-100 bg-white flex gap-3">
+                    <input
+                      type="text"
+                      className="flex-1 border border-gray-300 rounded-xl px-4 py-2 text-sm outline-none focus:border-cyan-500"
+                      placeholder="Type admin reply..."
+                      value={adminReply}
+                      onChange={(e) => setAdminReply(e.target.value)}
+                      onKeyDown={(e) => e.key === "Enter" && handleSendLiveReply()}
+                    />
+                    <button
+                      onClick={handleSendLiveReply}
+                      className="bg-cyan-600 hover:bg-cyan-700 text-white px-5 py-2 rounded-xl text-sm font-bold shadow transition"
+                    >
+                      Reply
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <div className="h-full flex flex-col items-center justify-center text-center p-6 text-gray-400">
+                  <span className="text-4xl mb-2">💬</span>
+                  <p className="text-sm font-semibold">Select an active visitor session from the sidebar to chat live.</p>
+                </div>
+              )}
             </div>
           </div>
         )}

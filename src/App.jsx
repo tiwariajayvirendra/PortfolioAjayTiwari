@@ -11,41 +11,39 @@ import CrudOperation from "./components/CrudOperations.jsx";
 import Projects from "./components/Projects.jsx";
 import AdminDashboard from "./components/AdminDashboard.jsx";
 import AskAI from "./components/AskAI.jsx";
- 
+import Footer from "./components/Footer.jsx";
+import ChatWithAdmin from "./components/ChatWithAdmin.jsx";
+import Experience from "./components/Experience.jsx";
 
 function App() {
   return (
     <Router>
-      <div className="bg-white min-h-screen text-black font-sans">
-        {/* Navbar at the top */}
+      <div className="min-h-screen bg-transparent text-slate-100">
         <Navbar />
-
-        {/* Floating AI Assistant */}
         <AskAI />
 
-        <Routes>
-          {/* Home Page */}
-          <Route
-            path="/"
-            element={
-              <>
-                <Hero />
-                <About />
-                <Skills />
-                <CrudOperation />
-                <LiveChat />
-                <Donate /> {/* Razorpay Donate button integrated */}
-                {/* <DonateButton /> */}
-              </>
-            }
-          />
+        <main className="pb-14">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <Hero />
+                  <About />
+                  <Skills />
+                  <Experience />
+                  <CrudOperation />
+                  <Donate />
+                </>
+              }
+            />
+            <Route path="/projects" element={<Projects />} />
+            <Route path="/chat-with-me" element={<ChatWithAdmin />} />
+            <Route path="/admin" element={<AdminDashboard />} />
+          </Routes>
+        </main>
 
-          {/* Projects Page */}
-          <Route path="/projects" element={<Projects />} />
-
-          {/* Admin Page */}
-          <Route path="/admin" element={<AdminDashboard />} />
-        </Routes>
+        <Footer />
       </div>
     </Router>
   );

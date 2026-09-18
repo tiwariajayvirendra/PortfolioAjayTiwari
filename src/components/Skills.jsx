@@ -1,129 +1,52 @@
-import React from "react";
+﻿import React from "react";
+
+const skillGroups = [
+  {
+    title: "Machine Learning & NLP",
+    accent: "from-cyan-500/20 to-blue-500/20",
+    bullets: ["Decision Trees, Random Forest, KNN", "Logistic Regression, Naive Bayes", "Tokenization, TF-IDF preprocessing", "Sentiment Analysis & Text Classification"],
+  },
+  {
+    title: "Frameworks & Tools",
+    accent: "from-emerald-500/20 to-lime-500/20",
+    bullets: ["Scikit-learn & NLTK", "NumPy, Pandas, Matplotlib", "Python & JavaScript", "SQL & Core Data Structures"],
+  },
+  {
+    title: "Data Engineering",
+    accent: "from-violet-500/20 to-fuchsia-500/20",
+    bullets: ["End-to-End ETL Pipelines", "Apache Airflow workflow mapping", "Data Cleaning & Quarantine Logic", "MySQL & MongoDB schema management"],
+  },
+  {
+    title: "DevOps & Cloud",
+    accent: "from-amber-500/20 to-orange-500/20",
+    bullets: ["Docker containment & Hub distribution", "GitHub Actions CI/CD automation", "Flask microservice deployment", "Prompt Engineering (Cursor, Gemini)"],
+  },
+];
 
 function Skills() {
   return (
-    <section
-      id="skills"
-      className="px-6 md:px-20 py-20 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 text-black"
-    >
-      <h2 className="text-4xl font-extrabold text-center text-purple-700 mb-12 animate-pulse">
-        🛠️ Tech - Skills
-      </h2>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
-        {/* Frontend */}
-        <div className="p-6 bg-gradient-to-r from-blue-100 to-blue-50 border border-blue-200 rounded-2xl shadow-lg hover:shadow-xl transition">
-          <h3 className="text-xl font-bold text-blue-700 mb-3">Frontend Development</h3>
-          <ul className="list-disc list-inside text-gray-800 space-y-2 text-sm">
-            <li>React.js with modular component architecture</li>
-            <li>Tailwind CSS for scalable, responsive UI</li>
-            <li>HTML5 & CSS3 with semantic structure</li>
-            <li>JavaScript ES6+ with onboarding clarity</li>
-            <li>Used AI – For speed and saved more time</li>
-          </ul>
+    <section id="skills" className="py-20 sm:py-24">
+      <div className="section-shell">
+        <div className="flex flex-col gap-4 text-center sm:text-left">
+          <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">Skills</p>
+          <h2 className="section-title">A modern stack with practical depth.</h2>
+          <p className="section-subtitle mx-auto sm:mx-0">The work blends product thinking, backend stability, and polished UI to keep projects dependable and impressive.</p>
         </div>
 
-        {/* Backend */}
-        <div className="p-6 bg-gradient-to-r from-green-100 to-green-50 border border-green-200 rounded-2xl shadow-lg hover:shadow-xl transition">
-          <h3 className="text-xl font-bold text-green-700 mb-3">Backend Engineering</h3>
-          <ul className="list-disc list-inside text-gray-800 space-y-2 text-sm">
-            <li>Node.js with Express.js routing and middleware</li>
-            <li>RESTful API design and validation</li>
-            <li>Authentication & session management</li>
-            <li>Error handling and logging utilities</li>
-          </ul>
-        </div>
-
-        {/* Database */}
-        <div className="p-6 bg-gradient-to-r from-purple-100 to-pink-50 border border-purple-200 rounded-2xl shadow-lg hover:shadow-xl transition">
-          <h3 className="text-xl font-bold text-purple-700 mb-3">Database & Storage</h3>
-          <ul className="list-disc list-inside text-gray-800 space-y-2 text-sm">
-            <li>MongoDB with Mongoose schema modeling</li>
-            <li>MySQL with relational joins and CLI recovery</li>
-            <li>Data validation and sanitization</li>
-            <li>Legacy-grade onboarding scripts for DB resets</li>
-          </ul>
-        </div>
-
-        {/* Teaching & Documentation */}
-        <div className="p-6 bg-gradient-to-r from-red-100 to-yellow-50 border border-red-200 rounded-2xl shadow-lg hover:shadow-xl transition">
-          <h3 className="text-xl font-bold text-red-600 mb-3">Teaching & Documentation</h3>
-          <ul className="list-disc list-inside text-gray-800 space-y-2 text-sm">
-            <li>Bilingual code explanations (Hindi-English)</li>
-            <li>API documentation for intern onboarding</li>
-            <li>Modular walkthroughs for scalable team growth</li>
-            <li>Legacy-focused utilities and onboarding clarity</li>
-          </ul>
-        </div>
-
-        {/* DevOps & Containerization */}
-        <div className="p-6 bg-gradient-to-r from-cyan-100 to-blue-50 border border-cyan-200 rounded-2xl shadow-lg hover:shadow-xl transition">
-          <h3 className="text-xl font-bold text-cyan-700 mb-3">DevOps & Containerization</h3>
-          <ul className="list-disc list-inside text-gray-800 space-y-2 text-sm">
-            <li>Docker for containerized development and deployment</li>
-            <li>Custom Dockerfiles for backend and frontend services</li>
-            <li>Volume mapping and environment variable management</li>
-            <li>Intern-friendly scripts for Docker onboarding</li>
-            <li>CLI troubleshooting and recovery utilities</li>
-          </ul>
-        </div>
-
-        {/* AI Skill - New Catchy Card */}
-        <div className="p-6 bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 border-2 border-cyan-500/50 rounded-2xl shadow-[0_0_20px_rgba(34,211,238,0.3)] hover:shadow-[0_0_30px_rgba(34,211,238,0.5)] transition-all transform hover:-translate-y-2">
-          <h3 className="text-xl font-bold text-cyan-400 mb-3 flex items-center gap-2">✨ AI Skill</h3>
-          <ul className="list-disc list-inside text-gray-200 space-y-2 text-sm leading-relaxed">
-            <li className="font-extrabold text-white">AI integration using API on Web</li>
-            <li>Groq Cloud & Llama 3 API Orchestration</li>
-            <li>Intelligent Chatbot Architecture</li>
-            <li>AI-driven User Experience (UX)</li>
-          </ul>
-        </div>
-
-        {/* AI Engineering */}
-        <div className="p-6 bg-gradient-to-r from-blue-900/20 to-cyan-900/20 border border-blue-500/30 rounded-2xl shadow-lg hover:shadow-blue-500/20 transition">
-          <h3 className="text-xl font-bold text-blue-400 mb-3">AI Engineering</h3>
-          <ul className="list-disc list-inside text-gray-300 space-y-2 text-sm">
-            <li>Custom AI Assistant (Jigoogle-AI) Integration</li>
-            <li>Groq Cloud SDK & Llama 3 Processing</li>
-            <li>Context-Aware Conversational Logic</li>
-            <li>Futuristic AI UI & UX Design</li>
-          </ul>
-        </div>
-
-        {/* AI Prompting & Automation */}
-        <div className="p-6 bg-gradient-to-r from-indigo-100 to-purple-50 border border-indigo-200 rounded-2xl shadow-lg hover:shadow-xl transition">
-          <h3 className="text-xl font-bold text-indigo-700 mb-3">AI Prompting & Automation</h3>
-          <ul className="list-disc list-inside text-gray-800 space-y-2 text-sm">
-            <li>Crafted effective prompts for AI tools (Copilot, ChatGPT, Bard)</li>
-            <li>Used AI for code generation, debugging, and documentation</li>
-            <li>Integrated AI into intern workflows for faster onboarding</li>
-            <li>Bilingual prompting for Hindi-English clarity</li>
-            <li>Optimized AI responses for legacy-grade team empowerment</li>
-          </ul>
-        </div>
-
-        {/* Data Science */}
-        <div className="p-6 bg-gradient-to-r from-orange-100 to-orange-50 border border-orange-200 rounded-2xl shadow-lg hover:shadow-xl transition">
-          <h3 className="text-xl font-bold text-orange-700 mb-3">Data Science</h3>
-          <ul className="list-disc list-inside text-gray-800 space-y-2 text-sm">
-            <li>Python for Data Science & Automation</li>
-            <li>Numpy & Pandas for data manipulation</li>
-            <li>Power BI & Excel for data visualization</li>
-            <li>Statistics for Data Science (DS)</li>
-          </ul>
-        </div>
-
-        {/* Under Development / Learning */}
-        <div className="p-6 bg-gradient-to-r from-teal-100 to-teal-50 border border-teal-200 rounded-2xl shadow-lg hover:shadow-xl transition">
-          <h3 className="text-xl font-bold text-teal-700 mb-3">🚀 Learning & Research</h3>
-          <p className="text-[10px] font-bold text-teal-600 mb-2 uppercase tracking-widest">Currently Mastering</p>
-          <ul className="list-disc list-inside text-gray-800 space-y-2 text-sm">
-            <li>Machine Learning (ML) & Deep Learning</li>
-            <li>Large Language Models (LLM)</li>
-            <li>Generative AI (Gen AI)</li>
-            <li>Agentic AI Systems</li>
-            <li>Advanced Prompt Engineering</li>
-          </ul>
+        <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          {skillGroups.map((group) => (
+            <div key={group.title} className={`rounded-[24px] border border-white/10 bg-gradient-to-br ${group.accent} p-6 backdrop-blur-xl`}>
+              <h3 className="text-xl font-semibold text-white">{group.title}</h3>
+              <ul className="mt-4 space-y-3 text-sm leading-7 text-slate-300">
+                {group.bullets.map((bullet) => (
+                  <li key={bullet} className="flex items-start gap-2">
+                    <span className="mt-1 h-2.5 w-2.5 rounded-full bg-cyan-300" />
+                    <span>{bullet}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       </div>
     </section>

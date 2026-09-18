@@ -1,56 +1,33 @@
-import React from "react";
+﻿import React from "react";
+
+const points = [
+  "Build responsive, secure, and scalable web applications with React, Node, and Express.",
+  "Design clean interfaces with Tailwind while keeping the backend reliable and easy to maintain.",
+  "Blend practical engineering with mentoring so future teams can onboard faster and work smarter.",
+];
 
 function About() {
   return (
-    <section
-      id="about"
-      className="px-6 md:px-20 py-20 bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 text-black"
-    >
-      <div className="max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-2xl shadow-2xl border border-purple-200">
-        <h2 className="text-4xl font-extrabold text-center text-purple-700 mb-8 animate-pulse">
-          🚀 Featured Story
-        </h2>
-
-        <div className="text-gray-800 leading-relaxed space-y-6 text-md md:text-lg">
-          <p>
-            Hii I’m{" "}
-            <span className="font-bold text-blue-600">
-              Tiwari Ajay Virendra
-            </span>
-            , a BCA student and Fullstack Web Developer with a deep love for
-            scalable systems and clean UI. My journey began with curiosity and
-            evolved into crafting production-ready MERN stack applications that
-            empower users and interns alike.
-          </p>
-          <p>
-            I specialize in building responsive, modular, and performant web
-            apps using{" "}
-            <span className="font-bold text-green-600">
-              MongoDB, Express, React, and Node.js, ChatGPT, Copilot, Docker, Kuberneties, Firebase, 
-            </span>
-            , styled with{" "}
-            <span className="font-bold text-purple-600">Tailwind CSS</span>. Every
-            line of code I write is designed to be teachable, reusable, and
-            onboarding-friendly.
-          </p>
-          <p>
-            Beyond the tech, I believe in{" "}
-            <span className="text-pink-600 font-semibold">
-              legacy-driven development
-            </span>
-            —creating utilities, documentation, and workflows that help future
-            developers thrive. Whether it’s scripting recovery tools, designing
-            UI layouts, or mentoring interns, I bring clarity, empathy, and a
-            growth mindset to every project.
-          </p>
-          <p>
-            My mission is simple:{" "}
-            <span className="italic text-purple-700">
-              to make modern web development accessible, scalable, and deeply
-              human.
-            </span>{" "}
-            Let’s build systems that teach, empower, and endure.
-          </p>
+    <section id="about" className="py-20 sm:py-24">
+      <div className="section-shell">
+        <div className="glass-card p-8 sm:p-10 lg:p-12">
+          <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-[0.3em] text-cyan-300">About me</p>
+              <h2 className="section-title mt-3">Thoughtful engineering with a modern feel.</h2>
+              <p className="section-subtitle">I combine technical depth with a people-first mindset, building apps that are strong under pressure and pleasant to use every day.</p>
+            </div>
+            <div className="space-y-4 rounded-[24px] border border-white/10 bg-slate-950/70 p-6 text-slate-300">
+              {points.map((point) => (
+                <div key={point} className="rounded-2xl border border-white/10 bg-white/5 p-4 text-sm leading-7 text-slate-300">
+                  {point}
+                </div>
+              ))}
+              <p className="rounded-2xl border border-cyan-500/20 bg-cyan-500/10 p-4 text-sm leading-7 text-cyan-100">
+                My mission is simple: make modern web development accessible, scalable, and deeply human.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </section>
